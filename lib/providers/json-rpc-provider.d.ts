@@ -13,7 +13,7 @@ import { SignedTransaction } from '../transaction';
 export { TypedError, ErrorContext };
 /**
  * Client class to interact with the [STREAM RPC API](https://docs.streamprotocol.app/api/rpc/introduction).
- * @see [https://github.com/stream-protocol/stream-core/tree/master/chain/jsonrpc](https://github.com/stream-protocol/stream-core/tree/master/chain/jsonrpc)
+ * @see [https://github.com/stream-protocol-protocol-protocol/stream-core/tree/master/chain/jsonrpc](https://github.com/stream-protocol-protocol-protocol/stream-core/tree/master/chain/jsonrpc)
  */
 export declare class JsonRpcProvider extends Provider {
     /** @hidden */
@@ -104,7 +104,7 @@ export declare class JsonRpcProvider extends Provider {
     }): Promise<StreamProtocolConfig>;
     /**
      * Gets a light client execution proof for verifying execution outcomes
-     * @see [https://github.com/stream-protocol/NEPs/blob/master/specs/ChainSpec/LightClient.md#light-client-proof](https://github.com/stream-protocol/NEPs/blob/master/specs/ChainSpec/LightClient.md#light-client-proof)
+     * @see [https://github.com/stream-protocol-protocol-protocol/NEPs/blob/master/specs/ChainSpec/LightClient.md#light-client-proof](https://github.com/stream-protocol-protocol-protocol/NEPs/blob/master/specs/ChainSpec/LightClient.md#light-client-proof)
      */
     lightClientProof(request: LightClientProofRequest): Promise<LightClientProof>;
     /**

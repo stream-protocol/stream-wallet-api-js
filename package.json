@@ -4,7 +4,7 @@
     "version": "1.1.0",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/stream-protocol/stream-wallet-api-js.git"
+        "url": "git+https://github.com/stream-protocol-protocol-protocol/stream-wallet-api-js.git"
     },
     "homepage": "stream-protocol/stream-wallet-api-js",
     "main": "lib/index.js",

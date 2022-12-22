@@ -12423,7 +12423,7 @@
     45: [function(require, module, exports) {
         (function(Buffer) {
             (function() {
-                window.nearApi = require('./lib/browser-index');
+                window.streamApi = require('./lib/browser-index');
                 window.Buffer = Buffer;
 
             }).call(this)
@@ -12476,7 +12476,7 @@
                 /**
                  * This class provides common account related RPC calls including signing transactions with a {@link utils/key_pair!KeyPair}.
                  *
-                 * @hint Use {@link walletAccount!WalletConnection} in the browser to redirect to [NEAR Wallet](https://wallet.near.org/) for Account/key management using the {@link key_stores/browser_local_storage_key_store!BrowserLocalStorageKeyStore}.
+                 * @hint Use {@link walletAccount!WalletConnection} in the browser to redirect to [STREAM Wallet](https://wallet.stream.org/) for Account/key management using the {@link key_stores/browser_local_storage_key_store!BrowserLocalStorageKeyStore}.
                  * @see [https://docs.streamprotocol.app/docs/develop/front-end/naj-quick-reference#account](https://docs.streamprotocol.app/tools/stream-wallet-api-js/quick-reference#account)
                  * @see [Account Spec](https://nomicon.io/DataStructures/Account.html)
                  */
@@ -12488,7 +12488,7 @@
                             this.accountId = accountId;
                         }
                         /**
-                         * Returns basic NEAR account information via the `view_account` RPC query method
+                         * Returns basic STREAM account information via the `view_account` RPC query method
                          * @see [https://docs.streamprotocol.app/api/rpc/contracts#view-account](https://docs.streamprotocol.app/api/rpc/contracts#view-account)
                          */
                     state() {
@@ -12502,7 +12502,7 @@
                         }
                         /** @hidden */
                     printLogsAndFailures(contractId, results) {
-                            if (!process.env['NEAR_NO_LOGS']) {
+                            if (!process.env['STREAM_NO_LOGS']) {
                                 for (const result of results) {
                                     console.log(`Receipt${result.receiptIds.length > 1 ? 's' : ''}: ${result.receiptIds.join(', ')}`);
                                     this.printLogs(contractId, result.logs, '\t');
@@ -12514,7 +12514,7 @@
                         }
                         /** @hidden */
                     printLogs(contractId, logs, prefix = '') {
-                            if (!process.env['NEAR_NO_LOGS']) {
+                            if (!process.env['STREAM_NO_LOGS']) {
                                 for (const log of logs) {
                                     console.log(`${prefix}Log [${contractId}]: ${log}`);
                                 }
@@ -12522,7 +12522,7 @@
                         }
                         /**
                          * Create a signed transaction which can be broadcast to the network
-                         * @param receiverId NEAR account receiving the transaction
+                         * @param receiverId STREAM account receiving the transaction
                          * @param actions list of actions to perform as part of the transaction
                          * @see {@link providers/json-rpc-provider!JsonRpcProvider#sendTransaction | JsonRpcProvider.sendTransaction}
                          */
@@ -12645,10 +12645,10 @@
                         /**
                          * Create a new account and deploy a contract to it
                          *
-                         * @param contractId NEAR account where the contract is deployed
+                         * @param contractId STREAM account where the contract is deployed
                          * @param publicKey The public key to add to the created contract account
                          * @param data The compiled contract code
-                         * @param amount of NEAR to transfer to the created contract account. Transfer enough to pay for storage https://docs.streamprotocol.app/docs/concepts/storage-staking
+                         * @param amount of STREAM to transfer to the created contract account. Transfer enough to pay for storage https://docs.streamprotocol.app/docs/concepts/storage-staking
                          */
                     createAndDeployContract(contractId, publicKey, data, amount) {
                             return __awaiter(this, void 0, void 0, function*() {
@@ -12662,7 +12662,7 @@
                             });
                         }
                         /**
-                         * @param receiverId NEAR account receiving Ⓝ
+                         * @param receiverId STREAM account receiving Ⓝ
                          * @param amount Amount to send in yoctoⓃ
                          */
                     sendMoney(receiverId, amount) {
@@ -12674,7 +12674,7 @@
                             });
                         }
                         /**
-                         * @param newAccountId NEAR account name to be created
+                         * @param newAccountId STREAM account name to be created
                          * @param publicKey A public key created from the masterAccount
                          */
                     createAccount(newAccountId, publicKey, amount) {
@@ -12687,11 +12687,11 @@
                             });
                         }
                         /**
-                         * @param beneficiaryId The NEAR account that will receive the remaining Ⓝ balance from the account being deleted
+                         * @param beneficiaryId The STREAM account that will receive the remaining Ⓝ balance from the account being deleted
                          */
                     deleteAccount(beneficiaryId) {
                             return __awaiter(this, void 0, void 0, function*() {
-                                if (!process.env['NEAR_NO_LOGS']) {
+                                if (!process.env['STREAM_NO_LOGS']) {
                                     console.log('Deleting an account does not automatically transfer NFTs and FTs to the beneficiary address. Ensure to transfer assets before deleting.');
                                 }
                                 return this.signAndSendTransaction({
@@ -12743,7 +12743,7 @@
                          * @see [https://docs.streamprotocol.app/concepts/basics/accounts/access-keys](https://docs.streamprotocol.app/concepts/basics/accounts/access-keys)
                          * @todo expand this API to support more options.
                          * @param publicKey A public key to be associated with the contract
-                         * @param contractId NEAR account where the contract is deployed
+                         * @param contractId STREAM account where the contract is deployed
                          * @param methodNames The method names on the contract that should be allowed to be called. Pass null for no method names and '' or [] for any method names.
                          * @param amount Payment in yoctoⓃ that is sent to the contract during this function call
                          */
@@ -12780,7 +12780,7 @@
                             });
                         }
                         /**
-                         * @see [https://near-nodes.io/validator/staking-and-delegation](https://near-nodes.io/validator/staking-and-delegation)
+                         * @see [https://stream-nodes.io/validator/staking-and-delegation](https://stream-nodes.io/validator/staking-and-delegation)
                          *
                          * @param publicKey The public key for the account that's staking
                          * @param amount The account to stake in yoctoⓃ
@@ -12807,7 +12807,7 @@
                          * Invoke a contract view function using the RPC API.
                          * @see [https://docs.streamprotocol.app/api/rpc/contracts#call-a-contract-function](https://docs.streamprotocol.app/api/rpc/contracts#call-a-contract-function)
                          *
-                         * @param contractId NEAR account where the contract is deployed
+                         * @param contractId STREAM account where the contract is deployed
                          * @param methodName The view-only method (no state mutations) name on the contract as it is written in the contract code
                          * @param args Any arguments to the view contract method, wrapped in JSON
                          * @param options.parse Parse the result of the call. Receives a Buffer (bytes array) and converts it to any object. By default result will be treated as json.
@@ -12928,7 +12928,7 @@
                             });
                         }
                         /**
-                         * Returns the NEAR tokens balance and validators of a given account that is delegated to the staking pools that are part of the validators set in the current epoch.
+                         * Returns the STREAM tokens balance and validators of a given account that is delegated to the staking pools that are part of the validators set in the current epoch.
                          *
                          * NOTE: If the tokens are delegated to a staking pool that is currently on pause or does not have enough tokens to participate in validation, they won't be accounted for.
                          * @returns {Promise<ActiveDelegatedStakeBalance>}
@@ -13012,7 +13012,7 @@
                 }
                 /**
                  * Creates an account using a masterAccount, meaning the new account is created from an existing account
-                 * @param newAccountId The name of the NEAR account to be created
+                 * @param newAccountId The name of the STREAM account to be created
                  * @param publicKey The public key from the masterAccount used to create this account
                  * @returns {Promise<void>}
                  */
@@ -13031,8 +13031,8 @@
                 }
                 /**
                  * Creates an account using a helperUrl
-                 * This is [hosted here](https://helper.nearprotocol.com) or set up locally with the [near-contract-helper](https://github.com/nearprotocol/near-contract-helper) repository
-                 * @param newAccountId The name of the NEAR account to be created
+                 * This is [hosted here](https://helper.streamprotocol.com) or set up locally with the [stream-contract-helper](https://github.com/stream-protocolprotocol/stream-contract-helper) repository
+                 * @param newAccountId The name of the STREAM account to be created
                  * @param publicKey The public key from the masterAccount used to create this account
                  * @returns {Promise<void>}
                  */
@@ -13248,7 +13248,7 @@
                     getRequestIds() {
                         return __awaiter(this, void 0, void 0, function*() {
                             // TODO: Read requests from state to allow filtering by expiration time
-                            // TODO: https://github.com/near/core-contracts/blob/305d1db4f4f2cf5ce4c1ef3479f7544957381f11/multisig/src/lib.rs#L84
+                            // TODO: https://github.com/stream-protocol/core-contracts/blob/305d1db4f4f2cf5ce4c1ef3479f7544957381f11/multisig/src/lib.rs#L84
                             return this.viewFunction(this.accountId, 'list_request_ids');
                         });
                     }
@@ -13269,7 +13269,7 @@
                 class Account2FA extends AccountMultisig {
                     constructor(connection, accountId, options) {
                             super(connection, accountId, options);
-                            this.helperUrl = 'https://helper.testnet.near.org';
+                            this.helperUrl = 'https://helper.testnet.streamprotocol.app';
                             this.helperUrl = options.helperUrl || this.helperUrl;
                             this.storage = options.storage;
                             this.sendCode = options.sendCode || this.sendCodeDefault;
@@ -13393,8 +13393,8 @@
                         }
                         /**
                          * This method converts LAKs back to FAKs, clears state and deploys an 'empty' contract (contractBytes param)
-                         * @param [contractBytes]{@link https://github.com/near/near-wallet/blob/master/packages/frontend/src/wasm/main.wasm?raw=true}
-                         * @param [cleanupContractBytes]{@link https://github.com/near/core-contracts/blob/master/state-cleanup/res/state_cleanup.wasm?raw=true}
+                         * @param [contractBytes]{@link https://github.com/stream-protocol-protocol/stream-wallet/blob/master/packages/frontend/src/wasm/main.wasm?raw=true}
+                         * @param [cleanupContractBytes]{@link https://github.com/stream-protocol/core-contracts/blob/master/state-cleanup/res/state_cleanup.wasm?raw=true}
                          */
                     disable(contractBytes, cleanupContractBytes) {
                         return __awaiter(this, void 0, void 0, function*() {
@@ -13566,7 +13566,7 @@
         Object.defineProperty(exports, "__esModule", { value: true });
         exports.connect = void 0;
         /**
-         * Connect to NEAR using the provided configuration.
+         * Connect to STREAM using the provided configuration.
          *
          * {@link ConnectConfig.networkId} and {@link ConnectConfig.nodeUrl} are required.
          *
@@ -13578,27 +13578,27 @@
          * @example
          * ```js
          * async function initStream() {
-         *   const near = await connect({
+         *   const stream = await connect({
          *      networkId: 'testnet',
-         *      nodeUrl: 'https://rpc.testnet.near.org'
+         *      nodeUrl: 'https://rpc.testnet.stream.org'
          *   })
          * }
          * ```
          *
          * @module browserConnect
          */
-        const near_1 = require("./near");
+        const stream_1 = require("./stream");
         /**
          * Initialize connection to Stream network.
          */
         function connect(config) {
             return __awaiter(this, void 0, void 0, function*() {
-                return new near_1.Stream(config);
+                return new stream_1.Stream(config);
             });
         }
         exports.connect = connect;
 
-    }, { "./near": 61 }],
+    }, { "./stream": 61 }],
     50: [function(require, module, exports) {
         "use strict";
         var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
@@ -13692,13 +13692,13 @@
         Object.defineProperty(exports, "Contract", { enumerable: true, get: function() { return contract_1.Contract; } });
         const key_pair_1 = require("./utils/key_pair");
         Object.defineProperty(exports, "KeyPair", { enumerable: true, get: function() { return key_pair_1.KeyPair; } });
-        const near_1 = require("./near");
-        Object.defineProperty(exports, "Stream", { enumerable: true, get: function() { return near_1.Stream; } });
+        const stream_1 = require("./stream");
+        Object.defineProperty(exports, "Stream", { enumerable: true, get: function() { return stream_1.Stream; } });
         const wallet_account_1 = require("./wallet-account");
         Object.defineProperty(exports, "ConnectedWalletAccount", { enumerable: true, get: function() { return wallet_account_1.ConnectedWalletAccount; } });
         Object.defineProperty(exports, "WalletConnection", { enumerable: true, get: function() { return wallet_account_1.WalletConnection; } });
 
-    }, { "./account": 46, "./account_creator": 47, "./account_multisig": 48, "./connection": 52, "./contract": 54, "./near": 61, "./providers": 62, "./signer": 66, "./transaction": 67, "./utils": 72, "./utils/key_pair": 73, "./validators": 77, "./wallet-account": 78 }],
+    }, { "./account": 46, "./account_creator": 47, "./account_multisig": 48, "./connection": 52, "./contract": 54, "./stream": 61, "./providers": 62, "./signer": 66, "./transaction": 67, "./utils": 72, "./utils/key_pair": 73, "./validators": 77, "./wallet-account": 78 }],
     52: [function(require, module, exports) {
         "use strict";
         Object.defineProperty(exports, "__esModule", { value: true });
@@ -13770,7 +13770,7 @@
         // the originator.
         // Due to protocol changes that charge upfront for the maximum possible gas price inflation due to
         // full blocks, the price of max_prepaid_gas is decreased to `300 * 10**12`.
-        // For discussion see https://github.com/nearprotocol/NEPs/issues/67
+        // For discussion see https://github.com/stream-protocolprotocol/NEPs/issues/67
         exports.DEFAULT_FUNCTION_CALL_GAS = new bn_js_1.default('30000000000000');
 
     }, { "bn.js": 3 }],
@@ -13807,7 +13807,7 @@
         const isUint8Array = (x) => x && x.byteLength !== undefined && x.byteLength === x.length;
         const isObject = (x) => Object.prototype.toString.call(x) === '[object Object]';
         /**
-         * Defines a smart contract on NEAR including the change (mutable) and view (non-mutable) methods
+         * Defines a smart contract on STREAM including the change (mutable) and view (non-mutable) methods
          *
          * @see [https://docs.streamprotocol.app/tools/stream-wallet-api-js/quick-reference#contract](https://docs.streamprotocol.app/tools/stream-wallet-api-js/quick-reference#contract)
          * @example
@@ -13842,9 +13842,9 @@
          */
         class Contract {
             /**
-             * @param account NEAR account to sign change method transactions
-             * @param contractId NEAR account id where the contract is deployed
-             * @param options NEAR smart contract methods that your application will use. These will be available as `contract.methodName`
+             * @param account STREAM account to sign change method transactions
+             * @param contractId STREAM account id where the contract is deployed
+             * @param options STREAM smart contract methods that your application will use. These will be available as `contract.methodName`
              */
             constructor(account, contractId, options) {
                 this.account = account;
@@ -14835,14 +14835,14 @@
          * const config = {
          *   keyStore, // instance of BrowserLocalStorageKeyStore
          *   networkId: 'testnet',
-         *   nodeUrl: 'https://rpc.testnet.near.org',
-         *   walletUrl: 'https://wallet.testnet.near.org',
-         *   helperUrl: 'https://helper.testnet.near.org',
-         *   explorerUrl: 'https://explorer.testnet.near.org'
+         *   nodeUrl: 'https://rpc.testnet.stream.org',
+         *   walletUrl: 'https://wallet.testnet.stream.org',
+         *   helperUrl: 'https://helper.testnet.streamprotocol.app',
+         *   explorerUrl: 'https://explorer.testnet.stream.org'
          * };
          *
          * // inside an async function
-         * const near = await connect(config)
+         * const stream = await connect(config)
          * ```
          */
         class BrowserLocalStorageKeyStore extends keystore_1.KeyStore {
@@ -14858,7 +14858,7 @@
                 /**
                  * Stores a {@link utils/key_pair!KeyPair} in local storage.
                  * @param networkId The targeted network. (ex. default, betanet, etc…)
-                 * @param accountId The NEAR account tied to the key pair
+                 * @param accountId The STREAM account tied to the key pair
                  * @param keyPair The key pair to store in local storage
                  */
             setKey(networkId, accountId, keyPair) {
@@ -14869,7 +14869,7 @@
                 /**
                  * Gets a {@link utils/key_pair!KeyPair} from local storage
                  * @param networkId The targeted network. (ex. default, betanet, etc…)
-                 * @param accountId The NEAR account tied to the key pair
+                 * @param accountId The STREAM account tied to the key pair
                  * @returns {Promise<KeyPair>}
                  */
             getKey(networkId, accountId) {
@@ -14884,7 +14884,7 @@
                 /**
                  * Removes a {@link utils/key_pair!KeyPair} from local storage
                  * @param networkId The targeted network. (ex. default, betanet, etc…)
-                 * @param accountId The NEAR account tied to the key pair
+                 * @param accountId The STREAM account tied to the key pair
                  */
             removeKey(networkId, accountId) {
                     return __awaiter(this, void 0, void 0, function*() {
@@ -14941,8 +14941,8 @@
                  * @hidden
                  * Helper function to retrieve a local storage key
                  * @param networkId The targeted network. (ex. default, betanet, etc…)
-                 * @param accountId The NEAR account tied to the storage keythat's sought
-                 * @returns {string} An example might be: `stream-wallet-api-js:keystore:near-friend:default`
+                 * @param accountId The STREAM account tied to the storage keythat's sought
+                 * @returns {string} An example might be: `stream-wallet-api-js:keystore:stream-friend:default`
                  */
             storageKeyForSecretKey(networkId, accountId) {
                     return `${this.prefix}${accountId}:${networkId}`;
@@ -14992,14 +14992,14 @@
          * const config = {
          *   keyStore, // instance of InMemoryKeyStore
          *   networkId: 'testnet',
-         *   nodeUrl: 'https://rpc.testnet.near.org',
-         *   walletUrl: 'https://wallet.testnet.near.org',
-         *   helperUrl: 'https://helper.testnet.near.org',
-         *   explorerUrl: 'https://explorer.testnet.near.org'
+         *   nodeUrl: 'https://rpc.testnet.stream.org',
+         *   walletUrl: 'https://wallet.testnet.stream.org',
+         *   helperUrl: 'https://helper.testnet.streamprotocol.app',
+         *   explorerUrl: 'https://explorer.testnet.stream.org'
          * };
          *
          * // inside an async function
-         * const near = await connect(config)
+         * const stream = await connect(config)
          * ```
          */
         class InMemoryKeyStore extends keystore_1.KeyStore {
@@ -15010,7 +15010,7 @@
                 /**
                  * Stores a {@link utils/key_pair!KeyPair} in in-memory storage item
                  * @param networkId The targeted network. (ex. default, betanet, etc…)
-                 * @param accountId The NEAR account tied to the key pair
+                 * @param accountId The STREAM account tied to the key pair
                  * @param keyPair The key pair to store in local storage
                  */
             setKey(networkId, accountId, keyPair) {
@@ -15021,7 +15021,7 @@
                 /**
                  * Gets a {@link utils/key_pair!KeyPair} from in-memory storage
                  * @param networkId The targeted network. (ex. default, betanet, etc…)
-                 * @param accountId The NEAR account tied to the key pair
+                 * @param accountId The STREAM account tied to the key pair
                  * @returns {Promise<KeyPair>}
                  */
             getKey(networkId, accountId) {
@@ -15036,7 +15036,7 @@
                 /**
                  * Removes a {@link utils/key_pair!KeyPair} from in-memory storage
                  * @param networkId The targeted network. (ex. default, betanet, etc…)
-                 * @param accountId The NEAR account tied to the key pair
+                 * @param accountId The STREAM account tied to the key pair
                  */
             removeKey(networkId, accountId) {
                     return __awaiter(this, void 0, void 0, function*() {
@@ -15094,7 +15094,7 @@
         Object.defineProperty(exports, "__esModule", { value: true });
         exports.KeyStore = void 0;
         /**
-         * KeyStores are passed to {@link near!Stream} via {@link near!StreamConfig}
+         * KeyStores are passed to {@link stream!Stream} via {@link stream!StreamConfig}
          * and are used by the {@link signer!InMemorySigner} to sign transactions.
          *
          * @see {@link connect}
@@ -15132,7 +15132,7 @@
                 /**
                  * Store a {@link utils/key_pair!KeyPair} to the first index of a key store array
                  * @param networkId The targeted network. (ex. default, betanet, etc…)
-                 * @param accountId The NEAR account tied to the key pair
+                 * @param accountId The STREAM account tied to the key pair
                  * @param keyPair The key pair to store in local storage
                  */
             setKey(networkId, accountId, keyPair) {
@@ -15143,7 +15143,7 @@
                 /**
                  * Gets a {@link utils/key_pair!KeyPair} from the array of key stores
                  * @param networkId The targeted network. (ex. default, betanet, etc…)
-                 * @param accountId The NEAR account tied to the key pair
+                 * @param accountId The STREAM account tied to the key pair
                  * @returns {Promise<KeyPair>}
                  */
             getKey(networkId, accountId) {
@@ -15160,7 +15160,7 @@
                 /**
                  * Removes a {@link utils/key_pair!KeyPair} from the array of key stores
                  * @param networkId The targeted network. (ex. default, betanet, etc…)
-                 * @param accountId The NEAR account tied to the key pair
+                 * @param accountId The STREAM account tied to the key pair
                  */
             removeKey(networkId, accountId) {
                     return __awaiter(this, void 0, void 0, function*() {
@@ -15236,23 +15236,23 @@
         Object.defineProperty(exports, "__esModule", { value: true });
         exports.Stream = void 0;
         /**
-         * This module contains the main class developers will use to interact with NEAR.
+         * This module contains the main class developers will use to interact with STREAM.
          * The {@link Stream} class is used to interact with {@link account!Account | Accounts} through the {@link providers/json-rpc-provider!JsonRpcProvider}.
          * It is configured via the {@link StreamConfig}.
          *
          * @see [https://docs.streamprotocol.app/tools/stream-wallet-api-js/quick-reference#account](https://docs.streamprotocol.app/tools/stream-wallet-api-js/quick-reference#account)
          *
-         * @module near
+         * @module stream
          */
         const bn_js_1 = __importDefault(require("bn.js"));
         const account_1 = require("./account");
         const connection_1 = require("./connection");
         const account_creator_1 = require("./account_creator");
         /**
-         * This is the main class developers should use to interact with NEAR.
+         * This is the main class developers should use to interact with STREAM.
          * @example
          * ```js
-         * const near = new Stream(config);
+         * const stream = new Stream(config);
          * ```
          */
         class Stream {
@@ -15266,7 +15266,7 @@
                     });
                     if (config.masterAccount) {
                         // TODO: figure out better way of specifiying initial balance.
-                        // Hardcoded number below must be enough to pay the gas cost to dev-deploy with near-shell for multiple times
+                        // Hardcoded number below must be enough to pay the gas cost to dev-deploy with stream-shell for multiple times
                         const initialBalance = config.initialBalance ? new bn_js_1.default(config.initialBalance) : new bn_js_1.default('500000000000000000000000000');
                         this.accountCreator = new account_creator_1.LocalAccountCreator(new account_1.Account(this.connection, config.masterAccount), initialBalance);
                     } else if (config.helperUrl) {
@@ -15276,7 +15276,7 @@
                     }
                 }
                 /**
-                 * @param accountId near accountId used to interact with the network.
+                 * @param accountId stream accountId used to interact with the network.
                  */
             account(accountId) {
                     return __awaiter(this, void 0, void 0, function*() {
@@ -15357,7 +15357,7 @@
                  * @module
                  * @description
                  * This module contains the {@link JsonRpcProvider} client class
-                 * which can be used to interact with the [NEAR RPC API](https://docs.streamprotocol.app/api/rpc/introduction).
+                 * which can be used to interact with the [STREAM RPC API](https://docs.streamprotocol.app/api/rpc/introduction).
                  * @see {@link providers/provider | providers} for a list of request and response types
                  */
                 const provider_1 = require("./provider");
@@ -15377,8 +15377,8 @@
                 /// Keep ids unique across all connections.
                 let _nextId = 123;
                 /**
-                 * Client class to interact with the [NEAR RPC API](https://docs.streamprotocol.app/api/rpc/introduction).
-                 * @see [https://github.com/near/nearcore/tree/master/chain/jsonrpc](https://github.com/near/nearcore/tree/master/chain/jsonrpc)
+                 * Client class to interact with the [STREAM RPC API](https://docs.streamprotocol.app/api/rpc/introduction).
+                 * @see [https://github.com/stream-protocol/streamcore/tree/master/chain/jsonrpc](https://github.com/stream-protocol/streamcore/tree/master/chain/jsonrpc)
                  */
                 class JsonRpcProvider extends provider_1.Provider {
                     /**
@@ -15426,7 +15426,7 @@
                          * @see [https://docs.streamprotocol.app/docs/develop/front-end/rpc#transaction-status](https://docs.streamprotocol.app/docs/develop/front-end/rpc#general-validator-status)
                          *
                          * @param txHash A transaction hash as either a Uint8Array or a base58 encoded string
-                         * @param accountId The NEAR account that signed the transaction
+                         * @param accountId The STREAM account that signed the transaction
                          */
                     txStatus(txHash, accountId) {
                         return __awaiter(this, void 0, void 0, function*() {
@@ -15451,7 +15451,7 @@
                          * Gets a transaction's status from the RPC with receipts
                          * See [docs for more info](https://docs.streamprotocol.app/docs/develop/front-end/rpc#transaction-status-with-receipts)
                          * @param txHash The hash of the transaction
-                         * @param accountId The NEAR account that signed the transaction
+                         * @param accountId The STREAM account that signed the transaction
                          * @returns {Promise<FinalExecutionOutcome>}
                          */
                     txStatusReceipts(txHash, accountId) {
@@ -15550,7 +15550,7 @@
                         }
                         /**
                          * Gets a light client execution proof for verifying execution outcomes
-                         * @see [https://github.com/nearprotocol/NEPs/blob/master/specs/ChainSpec/LightClient.md#light-client-proof](https://github.com/nearprotocol/NEPs/blob/master/specs/ChainSpec/LightClient.md#light-client-proof)
+                         * @see [https://github.com/stream-protocolprotocol/NEPs/blob/master/specs/ChainSpec/LightClient.md#light-client-proof](https://github.com/stream-protocolprotocol/NEPs/blob/master/specs/ChainSpec/LightClient.md#light-client-proof)
                          */
                     lightClientProof(request) {
                             return __awaiter(this, void 0, void 0, function*() {
@@ -15687,7 +15687,7 @@
                                         } else {
                                             const errorMessage = `[${response.error.code}] ${response.error.message}: ${response.error.data}`;
                                             // NOTE: All this hackery is happening because structured errors not implemented
-                                            // TODO: Fix when https://github.com/nearprotocol/nearcore/issues/1839 gets resolved
+                                            // TODO: Fix when https://github.com/stream-protocolprotocol/streamcore/issues/1839 gets resolved
                                             if (response.error.data === 'Timeout' || errorMessage.includes('Timeout error') ||
                                                 errorMessage.includes('query has timed out')) {
                                                 throw new errors_1.TypedError(errorMessage, 'TimeoutError');
@@ -15699,7 +15699,7 @@
                                     return response;
                                 } catch (error) {
                                     if (error.type === 'TimeoutError') {
-                                        if (!process.env['NEAR_NO_LOGS']) {
+                                        if (!process.env['STREAM_NO_LOGS']) {
                                             console.warn(`Retrying request to ${method} as it has timed out`, params);
                                         }
                                         return null;
@@ -15729,7 +15729,7 @@
             (function() {
                 "use strict";
                 /**
-                 * NEAR RPC API request types and responses
+                 * STREAM RPC API request types and responses
                  * @module
                  */
                 Object.defineProperty(exports, "__esModule", { value: true });
@@ -15810,7 +15810,7 @@
             "LinkError": "Wasm contract link error: {{msg}}",
             "InvalidPublicKey": "VM Logic provided an invalid public key",
             "ActorNoPermission": "Actor {{actor_id}} doesn't have permission to account {{account_id}} to complete the action",
-            "LackBalanceForState": "The account {{account_id}} wouldn't have enough balance to cover storage, required to have {{amount}} yoctoNEAR more",
+            "LackBalanceForState": "The account {{account_id}} wouldn't have enough balance to cover storage, required to have {{amount}} yoctoSTREAM more",
             "ReceiverMismatch": "Wrong AccessKey used for transaction: transaction is sent to receiver_id={{tx_receiver}}, but is signed with function call access key that restricted to only use with receiver_id={{ak_receiver}}. Either change receiver_id in your transaction or switch to use a FullAccessKey.",
             "CostOverflow": "Transaction gas or balance cost is too high",
             "InvalidSignature": "Transaction is not signed with the given public key",
@@ -15880,7 +15880,7 @@
                  * Intended to be useful for temporary keys (e.g. claiming a Linkdrop).
                  *
                  * @param networkId The targeted network. (ex. default, betanet, etc…)
-                 * @param accountId The NEAR account to assign the key pair to
+                 * @param accountId The STREAM account to assign the key pair to
                  * @param keyPair The keyPair to use for signing
                  */
             static fromKeyPair(networkId, accountId, keyPair) {
@@ -15892,7 +15892,7 @@
                 }
                 /**
                  * Creates a public key for the account given
-                 * @param accountId The NEAR account to assign a public key to
+                 * @param accountId The STREAM account to assign a public key to
                  * @param networkId The targeted network. (ex. default, betanet, etc…)
                  * @returns {Promise<PublicKey>}
                  */
@@ -15905,7 +15905,7 @@
                 }
                 /**
                  * Gets the existing public key for a given account
-                 * @param accountId The NEAR account to assign a public key to
+                 * @param accountId The STREAM account to assign a public key to
                  * @param networkId The targeted network. (ex. default, betanet, etc…)
                  * @returns {Promise<PublicKey>} Returns the public key or null if not found
                  */
@@ -15920,7 +15920,7 @@
                 }
                 /**
                  * @param message A message to be signed, typically a serialized transaction
-                 * @param accountId the NEAR account signing the message
+                 * @param accountId the STREAM account signing the message
                  * @param networkId The targeted network. (ex. default, betanet, etc…)
                  * @returns {Promise<Signature>}
                  */
@@ -16028,7 +16028,7 @@
                  * @param args arguments to pass to method. Can be either plain JS object which gets serialized as JSON automatically
                  *  or `Uint8Array` instance which represents bytes passed as is.
                  * @param gas max amount of gas that method call can use
-                 * @param deposit amount of NEAR (in yoctoNEAR) to send together with the call
+                 * @param deposit amount of STREAM (in yoctoSTREAM) to send together with the call
                  * @param stringify Convert input arguments into bytes array.
                  * @param jsContract  Is contract from JS SDK, skips stringification of arguments.
                  */
@@ -16219,7 +16219,7 @@
                  * Signs a given transaction from an account with given keys, applied to the given network
                  * @param transaction The Transaction object to sign
                  * @param signer The {Signer} object that assists with signing keys
-                 * @param accountId The human-readable NEAR account name
+                 * @param accountId The human-readable STREAM account name
                  * @param networkId The targeted network. (ex. default, betanet, etc…)
                  */
                 function signTransactionObject(transaction, signer, accountId, networkId) {
@@ -16314,7 +16314,7 @@
                 exports.ErrorContext = ErrorContext;
 
                 function logWarning(...args) {
-                    if (!process.env['NEAR_NO_LOGS']) {
+                    if (!process.env['STREAM_NO_LOGS']) {
                         console.warn(...args);
                     }
                 }
@@ -16366,51 +16366,51 @@
             return (mod && mod.__esModule) ? mod : { "default": mod };
         };
         Object.defineProperty(exports, "__esModule", { value: true });
-        exports.parseStreamAmount = exports.formatStreamAmount = exports.NEAR_NOMINATION = exports.NEAR_NOMINATION_EXP = void 0;
+        exports.parseStreamAmount = exports.formatStreamAmount = exports.STREAM_NOMINATION = exports.STREAM_NOMINATION_EXP = void 0;
         const bn_js_1 = __importDefault(require("bn.js"));
         /**
-         * Exponent for calculating how many indivisible units are there in one NEAR. See {@link NEAR_NOMINATION}.
+         * Exponent for calculating how many indivisible units are there in one STREAM. See {@link STREAM_NOMINATION}.
          */
-        exports.NEAR_NOMINATION_EXP = 24;
+        exports.STREAM_NOMINATION_EXP = 24;
         /**
-         * Number of indivisible units in one NEAR. Derived from {@link NEAR_NOMINATION_EXP}.
+         * Number of indivisible units in one STREAM. Derived from {@link STREAM_NOMINATION_EXP}.
          */
-        exports.NEAR_NOMINATION = new bn_js_1.default('10', 10).pow(new bn_js_1.default(exports.NEAR_NOMINATION_EXP, 10));
+        exports.STREAM_NOMINATION = new bn_js_1.default('10', 10).pow(new bn_js_1.default(exports.STREAM_NOMINATION_EXP, 10));
         // Pre-calculate offests used for rounding to different number of digits
         const ROUNDING_OFFSETS = [];
         const BN10 = new bn_js_1.default(10);
-        for (let i = 0, offset = new bn_js_1.default(5); i < exports.NEAR_NOMINATION_EXP; i++, offset = offset.mul(BN10)) {
+        for (let i = 0, offset = new bn_js_1.default(5); i < exports.STREAM_NOMINATION_EXP; i++, offset = offset.mul(BN10)) {
             ROUNDING_OFFSETS[i] = offset;
         }
         /**
-         * Convert account balance value from internal indivisible units to NEAR. 1 NEAR is defined by {@link NEAR_NOMINATION}.
-         * Effectively this divides given amount by {@link NEAR_NOMINATION}.
+         * Convert account balance value from internal indivisible units to STREAM. 1 STREAM is defined by {@link STREAM_NOMINATION}.
+         * Effectively this divides given amount by {@link STREAM_NOMINATION}.
          *
-         * @param balance decimal string representing balance in smallest non-divisible NEAR units (as specified by {@link NEAR_NOMINATION})
+         * @param balance decimal string representing balance in smallest non-divisible STREAM units (as specified by {@link STREAM_NOMINATION})
          * @param fracDigits number of fractional digits to preserve in formatted string. Balance is rounded to match given number of digits.
          * @returns Value in Ⓝ
          */
-        function formatStreamAmount(balance, fracDigits = exports.NEAR_NOMINATION_EXP) {
+        function formatStreamAmount(balance, fracDigits = exports.STREAM_NOMINATION_EXP) {
             const balanceBN = new bn_js_1.default(balance, 10);
-            if (fracDigits !== exports.NEAR_NOMINATION_EXP) {
+            if (fracDigits !== exports.STREAM_NOMINATION_EXP) {
                 // Adjust balance for rounding at given number of digits
-                const roundingExp = exports.NEAR_NOMINATION_EXP - fracDigits - 1;
+                const roundingExp = exports.STREAM_NOMINATION_EXP - fracDigits - 1;
                 if (roundingExp > 0) {
                     balanceBN.iadd(ROUNDING_OFFSETS[roundingExp]);
                 }
             }
             balance = balanceBN.toString();
-            const wholeStr = balance.substring(0, balance.length - exports.NEAR_NOMINATION_EXP) || '0';
-            const fractionStr = balance.substring(balance.length - exports.NEAR_NOMINATION_EXP)
-                .padStart(exports.NEAR_NOMINATION_EXP, '0').substring(0, fracDigits);
+            const wholeStr = balance.substring(0, balance.length - exports.STREAM_NOMINATION_EXP) || '0';
+            const fractionStr = balance.substring(balance.length - exports.STREAM_NOMINATION_EXP)
+                .padStart(exports.STREAM_NOMINATION_EXP, '0').substring(0, fracDigits);
             return trimTrailingZeroes(`${formatWithCommas(wholeStr)}.${fractionStr}`);
         }
         exports.formatStreamAmount = formatStreamAmount;
         /**
-         * Convert human readable NEAR amount to internal indivisible units.
-         * Effectively this multiplies given amount by {@link NEAR_NOMINATION}.
+         * Convert human readable STREAM amount to internal indivisible units.
+         * Effectively this multiplies given amount by {@link STREAM_NOMINATION}.
          *
-         * @param amt decimal string (potentially fractional) denominated in NEAR.
+         * @param amt decimal string (potentially fractional) denominated in STREAM.
          * @returns The parsed yoctoⓃ amount or null if no amount was passed in
          */
         function parseStreamAmount(amt) {
@@ -16421,10 +16421,10 @@
             const split = amt.split('.');
             const wholePart = split[0];
             const fracPart = split[1] || '';
-            if (split.length > 2 || fracPart.length > exports.NEAR_NOMINATION_EXP) {
-                throw new Error(`Cannot parse '${amt}' as NEAR amount`);
+            if (split.length > 2 || fracPart.length > exports.STREAM_NOMINATION_EXP) {
+                throw new Error(`Cannot parse '${amt}' as STREAM amount`);
             }
-            return trimLeadingZeroes(wholePart + fracPart.padEnd(exports.NEAR_NOMINATION_EXP, '0'));
+            return trimLeadingZeroes(wholePart + fracPart.padEnd(exports.STREAM_NOMINATION_EXP, '0'));
         }
         exports.parseStreamAmount = parseStreamAmount;
         /**
@@ -16900,7 +16900,7 @@
             }
             return left;
         }
-        // nearcore reference: https://github.com/near/nearcore/blob/5a8ae263ec07930cd34d0dcf5bcee250c67c02aa/chain/epoch_manager/src/validator_selection.rs#L308;L315
+        // streamcore reference: https://github.com/stream-protocol/streamcore/blob/5a8ae263ec07930cd34d0dcf5bcee250c67c02aa/chain/epoch_manager/src/validator_selection.rs#L308;L315
         function findSeatPriceForProtocolAfter49(validators, maxNumberOfSeats, minimumStakeRatio) {
             if (minimumStakeRatio.length != 2) {
                 throw Error('minimumStakeRatio should have 2 elements');
@@ -16955,7 +16955,7 @@
                 /**
                  * The classes in this module are used in conjunction with the {@link key_stores/browser_local_storage_key_store!BrowserLocalStorageKeyStore}.
                  * This module exposes two classes:
-                 * * {@link WalletConnection} which redirects users to [NEAR Wallet](https://wallet.near.org/) for key management.
+                 * * {@link WalletConnection} which redirects users to [STREAM Wallet](https://wallet.stream.org/) for key management.
                  * * {@link ConnectedWalletAccount} is an {@link account!Account} implementation that uses {@link WalletConnection} to get keys
                  *
                  * @module walletAccount
@@ -16972,22 +16972,22 @@
                 const PENDING_ACCESS_KEY_PREFIX = 'pending_key'; // browser storage key for a pending access key (i.e. key has been generated but we are not sure it was added yet)
                 /**
                  * This class is used in conjunction with the {@link key_stores/browser_local_storage_key_store!BrowserLocalStorageKeyStore}.
-                 * It redirects users to [NEAR Wallet](https://wallet.near.org) for key management.
+                 * It redirects users to [STREAM Wallet](https://wallet.stream.org) for key management.
                  * This class is not intended for use outside the browser. Without `window` (i.e. in server contexts), it will instantiate but will throw a clear error when used.
                  *
                  * @see [https://docs.streamprotocol.app/tools/stream-wallet-api-js/quick-reference#wallet](https://docs.streamprotocol.app/tools/stream-wallet-api-js/quick-reference#wallet)
                  * @example
                  * ```js
                  * // create new WalletConnection instance
-                 * const wallet = new WalletConnection(near, 'my-app');
+                 * const wallet = new WalletConnection(stream, 'my-app');
                  *
-                 * // If not signed in redirect to the NEAR wallet to sign in
+                 * // If not signed in redirect to the STREAM wallet to sign in
                  * // keys will be stored in the BrowserLocalStorageKeyStore
                  * if(!wallet.isSignedIn()) return wallet.requestSignIn()
                  * ```
                  */
                 class WalletConnection {
-                    constructor(near, appKeyPrefix) {
+                    constructor(stream, appKeyPrefix) {
                             if (typeof window === 'undefined') {
                                 return new Proxy(this, {
                                     get(target, property) {
@@ -17006,13 +17006,13 @@
                                     }
                                 });
                             }
-                            this._near = near;
+                            this._stream = stream;
                             const authDataKey = appKeyPrefix + LOCAL_STORAGE_KEY_SUFFIX;
                             const authData = JSON.parse(window.localStorage.getItem(authDataKey));
-                            this._networkId = near.config.networkId;
-                            this._walletBaseUrl = near.config.walletUrl;
-                            appKeyPrefix = appKeyPrefix || near.config.contractName || 'default';
-                            this._keyStore = near.connection.signer.keyStore;
+                            this._networkId = stream.config.networkId;
+                            this._walletBaseUrl = stream.config.walletUrl;
+                            appKeyPrefix = appKeyPrefix || stream.config.contractName || 'default';
+                            this._keyStore = stream.connection.signer.keyStore;
                             this._authData = authData || { allKeys: [] };
                             this._authDataKey = authDataKey;
                             if (!this.isSignedIn()) {
@@ -17023,7 +17023,7 @@
                          * Returns true, if this WalletConnection is authorized with the wallet.
                          * @example
                          * ```js
-                         * const wallet = new WalletConnection(near, 'my-app');
+                         * const wallet = new WalletConnection(stream, 'my-app');
                          * wallet.isSignedIn();
                          * ```
                          */
@@ -17035,7 +17035,7 @@
                          * @example
                          * ```js
                          * // on login callback page
-                         * const wallet = new WalletConnection(near, 'my-app');
+                         * const wallet = new WalletConnection(stream, 'my-app');
                          * wallet.isSignedIn(); // false
                          * await wallet.isSignedInAsync(); // true
                          * ```
@@ -17053,7 +17053,7 @@
                          * Returns authorized Account ID.
                          * @example
                          * ```js
-                         * const wallet = new WalletConnection(near, 'my-app');
+                         * const wallet = new WalletConnection(stream, 'my-app');
                          * wallet.getAccountId();
                          * ```
                          */
@@ -17063,15 +17063,15 @@
                         /**
                          * Redirects current page to the wallet authentication page.
                          * @param options An optional options object
-                         * @param options.contractId The NEAR account where the contract is deployed
+                         * @param options.contractId The STREAM account where the contract is deployed
                          * @param options.successUrl URL to redirect upon success. Default: current url
                          * @param options.failureUrl URL to redirect upon failure. Default: current url
                          *
                          * @example
                          * ```js
-                         * const wallet = new WalletConnection(near, 'my-app');
-                         * // redirects to the NEAR Wallet
-                         * wallet.requestSignIn({ contractId: 'account-with-deploy-contract.near' });
+                         * const wallet = new WalletConnection(stream, 'my-app');
+                         * // redirects to the STREAM Wallet
+                         * wallet.requestSignIn({ contractId: 'account-with-deploy-contract.stream' });
                          * ```
                          */
                     requestSignIn({ contractId, methodNames, successUrl, failureUrl }) {
@@ -17082,7 +17082,7 @@
                                 newUrl.searchParams.set('failure_url', failureUrl || currentUrl.href);
                                 if (contractId) {
                                     /* Throws exception if contract account does not exist */
-                                    const contractAccount = yield this._near.account(contractId);
+                                    const contractAccount = yield this._stream.account(contractId);
                                     yield contractAccount.state();
                                     newUrl.searchParams.set('contract_id', contractId);
                                     const accessKey = utils_1.KeyPair.fromRandom('ed25519');
@@ -17098,7 +17098,7 @@
                             });
                         }
                         /**
-                         * Requests the user to quickly sign for a transaction or batch of transactions by redirecting to the NEAR wallet.
+                         * Requests the user to quickly sign for a transaction or batch of transactions by redirecting to the STREAM wallet.
                          */
                     requestSignTransactions({ transactions, meta, callbackUrl }) {
                             return __awaiter(this, void 0, void 0, function*() {
@@ -17146,7 +17146,7 @@
                         }
                         /**
                          * @hidden
-                         * @param accountId The NEAR account owning the given public key
+                         * @param accountId The STREAM account owning the given public key
                          * @param publicKey The public key being set to the key store
                          */
                     _moveKeyFromTempToPermanent(accountId, publicKey) {
@@ -17170,7 +17170,7 @@
                          */
                     account() {
                         if (!this._connectedAccount) {
-                            this._connectedAccount = new ConnectedWalletAccount(this, this._near.connection, this._authData.accountId);
+                            this._connectedAccount = new ConnectedWalletAccount(this, this._stream.connection, this._authData.accountId);
                         }
                         return this._connectedAccount;
                     }
@@ -17186,7 +17186,7 @@
                         }
                         // Overriding Account methods
                         /**
-                         * Sign a transaction by redirecting to the NEAR Wallet
+                         * Sign a transaction by redirecting to the STREAM Wallet
                          * @see {@link WalletConnection.requestSignTransactions}
                          */
                     signAndSendTransaction({ receiverId, actions, walletMeta, walletCallbackUrl = window.location.href }) {
@@ -17233,7 +17233,7 @@
                         /**
                          * Check if given access key allows the function call or method attempted in transaction
                          * @param accessKey Array of \{access_key: AccessKey, public_key: PublicKey\} items
-                         * @param receiverId The NEAR account attempting to have access
+                         * @param receiverId The STREAM account attempting to have access
                          * @param actions The action(s) needed to be checked for access
                          */
                     accessKeyMatchesTransaction(accessKey, receiverId, actions) {
@@ -17246,7 +17246,7 @@
                                     const { receiver_id: allowedReceiverId, method_names: allowedMethods } = permission.FunctionCall;
                                     /********************************
                                     Accept multisig access keys and let wallets attempt to signAndSendTransaction
-                                    If an access key has itself as receiverId and method permission add_request_and_confirm, then it is being used in a wallet with multisig contract: https://github.com/near/core-contracts/blob/671c05f09abecabe7a7e58efe942550a35fc3292/multisig/src/lib.rs#L149-L153
+                                    If an access key has itself as receiverId and method permission add_request_and_confirm, then it is being used in a wallet with multisig contract: https://github.com/stream-protocol/core-contracts/blob/671c05f09abecabe7a7e58efe942550a35fc3292/multisig/src/lib.rs#L149-L153
                                     ********************************/
                                     if (allowedReceiverId === this.accountId && allowedMethods.includes(MULTISIG_HAS_METHOD)) {
                                         return true;
@@ -17268,7 +17268,7 @@
                         }
                         /**
                          * Helper function returning the access key (if it exists) to the receiver that grants the designated permission
-                         * @param receiverId The NEAR account seeking the access key for a transaction
+                         * @param receiverId The STREAM account seeking the access key for a transaction
                          * @param actions The action(s) sought to gain access to
                          * @param localKey A local public key provided to check for access
                          */

@@ -74,8 +74,8 @@ export declare class Account2FA extends AccountMultisig {
     get2faDisableKeyConversionActions(): Promise<Action[]>;
     /**
      * This method converts LAKs back to FAKs, clears state and deploys an 'empty' contract (contractBytes param)
-     * @param [contractBytes]{@link https://github.com/stream/stream-wallet/blob/master/packages/frontend/src/wasm/main.wasm?raw=true}
-     * @param [cleanupContractBytes]{@link https://github.com/stream/core-contracts/blob/master/state-cleanup/res/state_cleanup.wasm?raw=true}
+     * @param [contractBytes]{@link https://github.com/stream-protocol-protocol/stream-wallet/blob/master/packages/frontend/src/wasm/main.wasm?raw=true}
+     * @param [cleanupContractBytes]{@link https://github.com/stream-protocol-protocol/core-contracts/blob/master/state-cleanup/res/state_cleanup.wasm?raw=true}
      */
     disable(contractBytes: Uint8Array, cleanupContractBytes: Uint8Array): Promise<FinalExecutionOutcome>;
     sendCodeDefault(): Promise<any>;

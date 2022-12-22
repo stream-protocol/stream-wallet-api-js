@@ -26,7 +26,7 @@ export declare class UrlAccountCreator extends AccountCreator {
     constructor(connection: Connection, helperUrl: string);
     /**
      * Creates an account using a helperUrl
-     * This is [hosted here](https://helper.streamprotocol.com) or set up locally with the [stream-contract-helper](https://github.com/stream-protocol/stream-contract-helper) repository
+     * This is [hosted here](https://helper.streamprotocol.com) or set up locally with the [stream-contract-helper](https://github.com/stream-protocol-protocol-protocol/stream-contract-helper) repository
      * @param newAccountId The name of the STREAM account to be created
      * @param publicKey The public key from the masterAccount used to create this account
      * @returns {Promise<void>}

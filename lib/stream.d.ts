@@ -10,7 +10,7 @@ export interface StreamConfig {
     /** @hidden */
     signer?: Signer;
     /**
-     * [Stream Contract Helper](https://github.com/stream-protocol/stream-contract-helper) url used to create accounts if no master account is provided
+     * [Stream Contract Helper](https://github.com/stream-protocol-protocol-protocol/stream-contract-helper) url used to create accounts if no master account is provided
      * @see {@link account_creator!UrlAccountCreator}
      */
     helperUrl?: string;

@@ -6,11 +6,11 @@ Stream Wallet JavaScript API is a complete library to interact with the Stream b
 
 - [Learn how to use](https://docs.streamprotocol.app/tools/stream-wallet-api-js/quick-reference) the library in your project
 
-- Read the [TypeDoc API](https://near.github.io/stream-wallet-api-js/) documentation
+- Read the [TypeDoc API](https://stream.github.io/stream-wallet-api-js/) documentation
 
 - [Cookbook](stream-protocol/stream-wallet-api-js/blob/master/examples/cookbook/README.md) with common use cases
 
-- To quickly get started with integrating NEAR in a _web browser_, read our [Web Frontend integration](https://docs.streamprotocol.app/develop/integrate/frontend) article.
+- To quickly get started with integrating STREAM in a _web browser_, read our [Web Frontend integration](https://docs.streamprotocol.app/develop/integrate/frontend) article.
 
 # License
 
